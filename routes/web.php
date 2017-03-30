@@ -12,46 +12,29 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    //return view('welcome');
 });
 
-Route::get('/', function() 
-{ 
-return view('home');
-});
+Route::get('/', 'HomeController@index');
+
+Route::get('/logout', 'Auth\LoginController@logout');
 
 
-Route::get('login', function()
-{
-return view('auth.login');
-});
-
-
-Route::get('logout', function()
-{
-return 'Logout usuario';
-});
-
-
-Route::get('catalog', function()
-{
-return view('catalog.index');
+Route::group(['middleware'=>'auth'],function(){
+Route::get('catalog', 'CatalogController@getIndex');
+Route::get('catalog/show/{id}', 'CatalogController@getShow');
+Route::get('catalog/create', 'CatalogController@getCreate');
+Route::post('catalog/create', 'CatalogController@postCreate');
+Route::get('catalog/edit/{id}', 'CatalogController@getEdit');
+Route::put('catalog/edit/{id}', 'CatalogController@putEdit');
+Route::put('/catalog/rent/{id}','CatalogController@putRent');
+Route::put('/catalog/return/{id}', 'CatalogController@putReturn');
+Route::delete('/catalog/delete/{id}', 'CatalogController@deleteMovie'); 
 });
 
 
-Route::get('catalog/show/{id}', function()
-{
-return view('catalog.show', array('id'=>$id));
-});
 
 
-Route::get('catalog/create', function()
-{
-return view('catalog.create');
-});
+Auth::routes();
 
-
-Route::get('catalog/edit/{id}', function()
-{
-return view('catalog.edit', array('id'=>$id));
-});
+Route::get('/home', 'HomeController@index');

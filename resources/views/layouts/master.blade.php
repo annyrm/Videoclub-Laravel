@@ -22,7 +22,7 @@
 <body>
     @include('partials.navbar')
     <div class="container">
-        @yield('content')
+        @notification() @yield('content')
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
